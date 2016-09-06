@@ -1,0 +1,29 @@
+-- tests compliment in multifunction graph
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library MFGRPH
+)library SCENE
+MF := MultifunctionGraph(String)
+mf1 := cycleOpen(["a","b","c"],"a")$MF
+adjacencyMatrix(mf1)
+diagramSvg("testGraph54m1.svg",mf1,true)
+mf2 := cycleClosed(["1","2","3"],"b")$MF
+adjacencyMatrix(mf2)
+diagramSvg("testGraph54m2.svg",mf2,true)
+mf3 := closedTensor(mf1,mf2,concat)$MF
+adjacencyMatrix(mf3)
+diagramSvg("testGraph54m3.svg",mf3,true)
+mf4 := closedCartesian(mf1,mf2,concat)$MF
+adjacencyMatrix(mf4)
+diagramSvg("testGraph54m4.svg",mf4,false)
+mf5 := ~ closedTensor(~mf1,~mf2,concat)$MF
+adjacencyMatrix(mf5)
+diagramSvg("testGraph54m5.svg",mf5,false)
+mf6 := ~ closedCartesian(~mf1,~mf2,concat)$MF
+adjacencyMatrix(mf6)
+diagramSvg("testGraph54m6.svg",mf6,false)
+
+--mf7 := closedTensor(~mf1,~mf2,concat)$MF
+--mf8 := closedCartesian(~mf1,~mf2,concat)$MF

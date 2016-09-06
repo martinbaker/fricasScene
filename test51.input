@@ -1,0 +1,24 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library FNGRPH
+)library MFGRPH
+
+DG := DirectedGraph(String)
+hs1 := cycleClosed(["a","b","c"],"a")$DG
+hs2 := cycleClosed(["1","2","3"],"b")$DG
+hs3 := closedTensor(hs1,hs2,concat)$DG
+diagramSvg("testGraph51s1.svg",hs3,true)
+
+FG := FunctionGraph(String)
+fg1 := cycleClosed(["a","b","c"],"a")$FG
+fg2 := cycleClosed(["1","2","3"],"b")$FG
+fg3 := closedTensor(fg1,fg2,concat)$FG
+diagramSvg("testGraph51s2.svg",fg3,true)
+
+MF := MultifunctionGraph(String)
+mf1 := cycleClosed(["a","b","c"],"a")$MF
+mf2 := cycleClosed(["1","2","3"],"b")$MF
+mf3 := closedTensor(mf1,mf2,concat)$MF
+diagramSvg("testGraph51s3.svg",mf3,true)

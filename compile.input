@@ -1,0 +1,18 @@
+)library SCENE
+)co axiom/loop
+)co axiom/fgraph
+)boot $bootStrapMode := true
+)co axiom/dgraph
+)co axiom/fngraph
+)co axiom/udgraph
+)co axiom/mfgraph
+)co axiom/wgraph
+)boot $bootStrapMode := false
+)co axiom/dgraph
+)co axiom/fngraph
+)co axiom/udgraph
+)co axiom/mfgraph
+)co axiom/wgraph
+
+
+

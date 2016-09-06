@@ -1,0 +1,41 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library FNGRPH
+GS := DirectedGraph(String)
+
+hs1 := cycleOpen(["a","b","c"],"a")$GS
+hs2 := cycleClosed(["1","2","3"],"b")$GS
+hs3 := closedTensor(hs1,hs2,concat)$GS
+diagramSvg("testGraph5s1.svg",hs3,true)
+
+hs4 := map(hs3,[1::NNI,2::NNI,3::NNI,_
+                1::NNI,2::NNI,3::NNI,_
+                1::NNI,2::NNI,3::NNI],["x","y","z"],4,0)$GS
+diagramSvg("testGraph5s2.svg",hs4,true)
+
+FG := FunctionGraph(String)
+
+fg1 := cycleClosed(["a","b","c"],"a")$FG
+diagramSvg("testGraph5s3.svg",fg1,true)
+
+fg2 := map(fg1,[1::NNI,2::NNI,2::NNI],["x","y"],1,0)$FG
+fg3 := mapContra(fg1,[1::NNI,2::NNI,2::NNI],["x","y"],1,0)$FG
+
+fg4 := cycleOpen(["a","b","c"],"a")$FG
+diagramSvg("testGraph5s4.svg",fg4,true)
+
+fg5 := map(fg4,[1::NNI,1::NNI,1::NNI],["x"],1,0)$FG
+diagramSvg("testGraph5s5.svg",fg5,true)
+
+fg6 := mapContra(fg4,[1::NNI,2::NNI,2::NNI],["x","y"],1,0)$FG
+
+coAdjoint(fg4,[1::NNI,1::NNI,1::NNI])
+
+coAdjoint(fg4,[1::NNI,1::NNI,2::NNI])
+
+contraAdjoint(fg4,[1::NNI,1::NNI,1::NNI])
+
+contraAdjoint(fg4,[1::NNI,1::NNI,2::NNI])
+

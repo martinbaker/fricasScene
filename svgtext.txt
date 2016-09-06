@@ -1,0 +1,87 @@
+I've been experimenting with scaling the text in the SVG files. Unfortunately text in graphics files always seems to be a bit messy so these issues seem to involve a lot of trial and error.
+
+I haven’t yet found a solution that I'm really happy with yet, that may take some time, but if you need a fix now I could probably come up with a short term patch that would improve the situation.
+
+Here are some things I have been trying:
+
+In the vG25_4x1.svg file changing the font-size of all the text tags from 32 to 20 seems to help, that is for every text tag, I changed this:
+
+<text font-size="32" x="0.0" y="171.05263157894737" style="fill:black">
+25
+</text>
+
+to this:
+
+<text font-size="20" x="0.0" y="171.05263157894737" style="fill:black">
+25
+</text>
+
+The scene SPAD code could be changed to scale it down by a suitable amount, but I’m not sure that’s the solution, because fonts only come with certain discrete fixed font sizes and we really need to vary continuously to fit in a certain sized box.
+
+Another option is to scale the tag like this:
+
+<text font-size="32" transform="scale(0.5,0.5)" x="0.0" y="52.631578947368425" style="fill:black">
+
+This works but it also changes the x and y coordinates so they need to multiplied by the inverse scale to correct them.
+
+The other problem is that the lines are not quite correct. This is because the lines stop short of the node coordinate to avoid overwriting the text. This shortening is an estimate because the program does no know exactly how big the text is.
+--------------------------------------------------------------------------------------------------
+
+The issues that I can think of are:
+1) The offset parameters given to addArrow!
+2) The way SVG draws text relative to the bottom-left of the text.
+3) The code to reduce the length of the arrow slightly to avoid overlapping the text.
+
+I started to investigate these but there also seems to be something else going on so it may take some time.
+
+I think it looks better if the arrows are offset slightly because if the arrow went to/from the centre of the text then it would also go through the intermediate nodes which might be a problem. However to investigate I switched this off in the VelocitiesToGraph code by changing:
+addArrow!(vG,["", 0, getVertexIndex(vG,v1), getVertexIndex(vG,v2), 5, 5, []]$ARROW)
+to:
+addArrow!(vG,["", 0, getVertexIndex(vG,v1), getVertexIndex(vG,v2), 0, 0, []]$ARROW)
+
+I think this may improve things very slightly but it is not as I expected because most of the lines seem to be aiming to/from the top-middle of the text. In SVG, by default, text is drawn relative to its bottom-right corner. This means that the lines should be aiming at the bottom-right of the text. 
+
+We should be able to change how the text is drawn relative to its coordinate by adding the following tags to the text entity:
+
+Horizontally centre : text-anchor="middle"
+Vertically centre : alignment-baseline="middle"  (not all programs support this)
+Can also displace by a given amount like this: dy="0.5ex"
+
+So we can add these to each text entity in SVG using tags like this:
+
+<text text-anchor="middle" font-size="20" x="0.0" y="171" style="fill:black">
+
+The other thing I tried investigating is the code that stops the edges short to avoid overlapping the text, this sometimes makes the lines very short which does not look right, in subdiagramSvg in graph-jg.spad I tried changing:
+arrNode := addSceneArrow(mt, fnode, tnode, offset, _
+             "proportional"::Symbol,0.1::DF,(diagramWidth(n)+10)::DF)
+
+to:
+arrNode := addSceneArrow(mt, fnode, tnode, offset, _
+             "fixed"::Symbol,0.1::DF,(diagramWidth(n)+10)::DF)
+
+This did not work so I need to investigate what is going on there.
+
+Martin
+-----------------------------------------------------
+
+in VelocitiesToGraph the function addRectangle! is called which adds each line to the
+graph like this:
+
+addArrow!(vG,["", 0, getVertexIndex(vG,v1), getVertexIndex(vG,v2), 5, 5, []]$ARROW
+
+This says offset the endpoints of the line by:
+xOffset = 5
+yOffset = 5
+
+in graph we call: diagramSvg
+this calls: subdiagramSvg
+this calls:
+          arrNode := addSceneArrow(mt, fnode, tnode, offset, _
+                     "proportional"::Symbol,0.1::DF,(diagramWidth(n)+10)::DF)
+                     
+        -- the parameter "proportional"
+        -- tells the scenegraph code to reduce the length of the arrow
+        -- slightly to avoid overlapping the vertex label
+                     
+addSceneArrow : (n : %, st : String, en : String, offset : PT, mode : Symbol, size : DF) -> %
+

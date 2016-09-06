@@ -1,0 +1,114 @@
+----Copyright (c) 2016 Johannes Grabmeier
+----All rights reserved.
+----
+----Redistribution and use in source and binary forms, with or without
+----modification, are permitted provided that the following conditions are
+----met:
+----
+----    - Redistributions of source code must retain the above copyright
+----      notice, this list of conditions and the following disclaimer.
+----
+----    - Redistributions in binary form must reproduce the above copyright
+----      notice, this list of conditions and the following disclaimer in
+----      the documentation and/or other materials provided with the
+----      distribution.
+----
+----THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+----IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+----TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+----PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+----OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+----EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+----PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+----PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+----LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+----NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+----SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+)abbrev package VL2GRP VelocitiesToGraph
+++ Author: Johannes Grabmeier
+++ Date Created: 2016-08-25
+++ Date Last Updated: 2016-08-27
+++ Basic Functions: 
+++ Related Constructors: 
+++ Also See:
+++ AMS Classifications:
+++ Keywords: 
+++ References:
+++ Description:
+VelocitiesToGraph(K: CommutativeRing): Exports == Implementation where
+  OF ==> OutputForm
+  IML ==> InternalMessageLevel
+  mLP ==> messageLevelPointer
+  NNI ==> NonNegativeInteger
+  OBJT ==> Record(value : Integer, posX : NNI, posY : NNI)
+  ARROW ==> Record(name : String, arrType : NNI, fromOb : NNI, _
+    toOb : NNI, xOffset : Integer, yOffset : Integer, map : List NNI)
+  Exports ==> IML with 
+    velocityMatrixToGraph: (Matrix Integer, x: Integer, y: Integer) -> UndirectedGraph Integer
+      ++ velocityMatrixToGraph: (vM, x, y) creates a graph with nodes being 
+      ++ numbered velocities, (standard coordinates) being 2 dim velocity vectors.
+    addRectangle!: (UndirectedGraph Integer, List Integer) -> UndirectedGraph Integer
+      ++ addRectangle!(vP, rec) assumes that 
+      ++ rec ist a rectangle, i.e. consisting of 4 vertices [i,j,k,l] describing
+      ++ the diagonals i-j and k-l. It adds the vertices i-l, i-l, j-k, j-l
+      ++ and can be used not only for rectangles!
+    transferGraph: (UndirectedGraph Integer, Integer, Integer) -> UndirectedGraph Integer
+      ++ transferGraph(vG, x, y) transfer all internal coordinates of the
+      ++ edges of the graph vG by x and y.
+    rectangleGraphs: (Matrix Integer, List List Integer, NNI, NNI) -> UndirectedGraph Integer
+      ++ addRectangle(vP, lRec, nc, dist)
+      ++   constructs one graph containing all rectangles in an array with nc columns
+      ++   vG is a velocity picture, lRec a list of rectangles and dist is the 
+      ++   space in points between two rectangles.
+    rectangleGraphs: (Matrix Integer, List List Integer, NNI) -> UndirectedGraph Integer
+      ++ addRectangle(vP, lRec, nc)
+      ++   constructs one graph containing all rectangles in an array with nc columns
+      ++   vG is a velocity picture, lRec a list of rectangles.
+  Implementation ==> add
+    import from OutputForm
+    velocityMatrixToGraph(vM: Matrix Integer, x: Integer, y: Integer): UndirectedGraph Integer ==
+       lV : List OBJT := []
+       m : NNI := nrows vM
+       n : NNI := ncols vM
+       o : OBJT := [0,0,0]
+       for i in 1..m repeat for j in 1..n repeat
+	 if not zero? vM(i,j) then
+           lV := cons( [vM(i,j)::NNI, (x+30*(m-i)) :: NNI, (y+30*(n-j)) :: NNI], lV)
+       vG : UndirectedGraph(Integer) := undirectedGraph [lV]
+    addRectangle!(vG: UndirectedGraph Integer, rec: List Integer): UndirectedGraph Integer ==
+      for v1 in first(rec,2) repeat for v2 in rest(rec,2) repeat 
+	addArrow!(vG,["", 0, getVertexIndex(vG,v1), getVertexIndex(vG,v2), 0, 0, []]$ARROW)
+      vG
+    transferGraph(vG: UndirectedGraph Integer, x: Integer, y: Integer): UndirectedGraph Integer == 
+      vertices: List OBJT := 
+        [[vt.value, (x+vt.posX) :: NNI, (y+vt.posY) :: NNI] for vt in getVertices vG]
+      undirectedGraph(vertices, copy getArrows vG)     
+    rectangleGraphs(vP: Matrix Integer, lRE: List List Integer, nc: NNI, dist: NNI) : UndirectedGraph Integer == 
+      -- Platz für einen Graphen:
+      xG : NNI := 30 * nrows vP
+      yG : NNI := 30 * ncols vP
+      -- Abstand der Graphenpositionen unten links
+      xDistance : NNI := dist + xG
+      yDistance : NNI := dist + yG
+      -- Positionsverschiebungen, erster Graph ist ganz oben links
+      x : Integer := 0
+      y : Integer := yDistance * ((#lRE) quo nc) - yG 
+      if mLP 3 then print blankSeparate [message " y ", y::OF]
+      if ((#lRE) rem nc) > 0 then y := y + yDistance
+      lG : List UndirectedGraph Integer := []
+      g : UndirectedGraph Integer := initial()
+      for rec in lRE for i in 1..#lRE repeat
+        g :=  velocityMatrixToGraph(vP, x, y)
+        addRectangle!(g, rec)
+        if mLP 3 then print blankSeparate [message "Graph ", i::OF, " for ", rec :: OF]
+        if mLP 3 then print blankSeparate [message "  with vertices", getVertices(g)::OF]
+        if mLP 3 then print blankSeparate [message "  and edges", getArrows(g)::OF]
+	lG := concat(lG, g)
+        -- positions for next rectangle:
+        if zero? (i rem nc) then 
+	   y := y - yDistance
+	   x := 0
+        else
+           x := x + xDistance
+      reduce("+", lG)

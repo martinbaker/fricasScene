@@ -1,0 +1,102 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library SCENE
+)library MATRIX
+GS := DirectedGraph(String)
+-- now create graph suitable for diagram
+OBJT ==> Record(value:String,posX:NNI,posY:NNI)
+ARRW ==> Record(name:String,arrType:NNI,fromOb:NNI,_
+           toOb:NNI,xOffset:Integer,yOffset:Integer)
+
+oba:OBJT := ["a",2,2]
+obb:OBJT := ["b",2,4]
+ara:ARRW := ["alpha",0,1,2,0,0]
+hs1 := directedGraph([oba,obb],[ara])$GS
+diagramSvg("testGraph4s1.svg",hs1,true)
+
+ob1:OBJT := ["1",2,2]
+ob2:OBJT := ["2",4,2]
+ar1:ARRW := ["beta",0,1,2,0,0]
+hs2 := directedGraph([ob1,ob2],[ar1])$GS
+diagramSvg("testGraph4s2.svg",hs2,true)
+
+hs3 := hs1+hs2
+diagramSvg("testGraph4s3.svg",hs3,true)
+
+hs4 := merge(hs1,directedGraph([oba,ob2],[ar1])$GS)
+diagramSvg("testGraph4s4.svg",hs4,true)
+
+hs5 := hs1*hs2
+diagramSvg("testGraph4s5.svg",hs5,true)
+
+hs6 := cartesian(hs1,hs2)
+diagramSvg("testGraph4s6.svg",hs6,true)
+
+obc:OBJT := ["a",3,2]
+obd:OBJT := ["b",2,4]
+obe:OBJT := ["c",4,6]
+obf:OBJT := ["d",3,8]
+obg:OBJT := ["e",3,10]
+arb:ARRW := ["alp1",0,1,2,0,0]
+arc:ARRW := ["alp2",0,2,4,0,0]
+ard:ARRW := ["alp3",0,1,3,0,0]
+are:ARRW := ["alp4",0,3,4,0,0]
+arf:ARRW := ["alp5",0,4,5,0,0]
+hs11 := directedGraph([obc,obd,obe,obf,obg],[arb,arc,ard,are,arf])$GS
+diagramSvg("testGraph4s7.svg",hs11,true)
+
+
+ob3:OBJT := ["1",2,3]
+ob4:OBJT := ["2",4,3]
+ob5:OBJT := ["3",6,4]
+ob6:OBJT := ["4",8,2]
+ar2:ARRW := ["bet1",0,1,2,0,0]
+ar3:ARRW := ["bet2",0,2,4,0,0]
+ar4:ARRW := ["bet3",0,2,3,0,0]
+hs12 := directedGraph([ob3,ob4,ob5,ob6],[ar2,ar3,ar4])$GS
+diagramSvg("testGraph4s8.svg",hs12,true)
+
+hs13 := hs11*hs12
+diagramSvg("testGraph4s9.svg",hs13,true)
+
+hs14 := cartesian(hs11,hs12)
+diagramSvg("testGraph4s10.svg",hs14,true)
+
+hs21 := cycleOpen(["a","b","c"],"a")$GS
+diagramSvg("testGraph4s12.svg",hs21,true)
+
+hs22 := cycleClosed(["1","2","3"],"b")$GS
+diagramSvg("testGraph4s13.svg",hs22,true)
+
+hs23 := cycleOpen(["x","y","z"],"c")$GS
+diagramSvg("testGraph4s14.svg",hs23,true)
+
+hs24 := closedTensor(closedTensor(hs21,hs22,concat)$GS,hs23,concat)$GS
+diagramSvg("testGraph4s15.svg",hs24,true)
+
+hs25 := closedTensor(hs21,closedTensor(hs22,hs23,concat)$GS,concat)$GS
+diagramSvg("testGraph4s16.svg",hs25,true)
+
+looseEquals(hs24,hs25)
+
+hs26 := closedCartesian(closedCartesian(hs21,hs22,concat)$GS,hs23,concat)$GS
+diagramSvg("testGraph4s17.svg",hs26,true)
+
+hs27 := closedCartesian(hs21,closedCartesian(hs22,hs23,concat)$GS,concat)$GS
+diagramSvg("testGraph4s18.svg",hs27,true)
+
+looseEquals(hs26,hs27)
+
+am21 := adjacencyMatrix(hs21)
+am22 := adjacencyMatrix(hs22)
+hs28 := closedTensor(hs21,hs22,concat)$GS
+am28 := adjacencyMatrix(hs28)
+kroneckerProduct(am21,am22)
+hs29 := closedCartesian(hs21,hs22,concat)$GS
+am29 := adjacencyMatrix(hs29)
+kroneckerSum(am21,am22)
+
+
+

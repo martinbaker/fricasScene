@@ -1,0 +1,16 @@
+C := CyclicGroup(4, d)
+CG := CayleyGraph(C)
+g := generator()$C
+gg := g*g
+cg1 := new([g])$CG
+cg2 := new([g,gg])$CG
+outBoundary([g],cg1)$CG
+outBoundary([g],cg2)$CG
+animals(g,cg1)$CG
+animals(g,cg2)$CG
+outedges(g,cg1)$CG
+outedges(g,cg2)$CG
+inedges(g,cg1)$CG
+inedges(g,cg2)$CG
+neighbours(g,cg1)$CG
+neighbours(g,cg2)$CG

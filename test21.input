@@ -1,0 +1,16 @@
+-- tests constructing multifunction graph using permutation
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library FNGRPH
+)library MFGRPH
+MF := MultifunctionGraph(String)
+cy1 := cycles([["a","b"],["c","d"]])
+cy2 := cycles([["a","c"],["b","d"]])
+G5 := multifunctionGraph([cy1,cy2])$MF
+diagramSvg("testGraph21s1.svg",G5,true)
+
+DG := DirectedGraph(String)
+G6 := directedGraph([cy1,cy2])$DG
+diagramSvg("testGraph21s2.svg",G6,true)

@@ -1,0 +1,49 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library FNGRPH
+GS := DirectedGraph(String)
+hs := directedGraph(["a","b"])$GS
+addObject!(hs,"c")$GS
+addArrow!(hs,"alpha",1,2)
+addArrow!(hs,"alpha",2,3)
+
+OBJT ==> Record(value:String,posX:NNI,posY:NNI)
+oba:OBJT := ["a",10,10]
+obb:OBJT := ["b",10,60]
+obc:OBJT := ["c",60,10]
+hs2 := directedGraph([oba,obb,obc])$GS
+addArrow!(hs2,"alpha",1,2)$GS
+addArrow!(hs2,"beta",2,3)$GS
+diagramSvg("testGraph2s1.svg",hs2,true)
+
+hs2 := directedGraph(["a","b","c"],[[0::NNI,1::NNI,0::NNI],[1::NNI,0::NNI,1::NNI],[0::NNI,1::NNI,1::NNI]])$GS
+diagramSvg("testGraph2s2.svg",hs2,true)
+
+T := terminal("a")$GS
+I := initial()$GS
+
+G1 := cycleOpen(["a","b","c","d"],"ar")$GS
+diagramSvg("testGraph2s3.svg",G1,true)
+
+G2 := cycleClosed(["a","b","c","d"],"ar")$GS
+diagramSvg("testGraph2s4.svg",G2,true)
+
+G3 := unit(["a","b","c","d"],"ar")$GS
+diagramSvg("testGraph2s5.svg",G3,true)
+
+G4 := kgraph(["a","b","c","d"],"ar")$GS
+diagramSvg("testGraph2s6.svg",G4,true)
+
+cy := cycles([["a","b"],["c","d"]])
+G5 := directedGraph([cy])$GS
+diagramSvg("testGraph2s7.svg",G5,true)
+
+dg2 := dihedralGroup(3)
+G6 := dg2::DirectedGraph(Integer)
+diagramSvg("testGraph2s8.svg",G6,false)
+
+MF1 := MultifunctionGraph(Integer)
+CG := toCayleyGraph(dg2)$MF1
+diagramSvg("testGraph2s9.svg",CG,false)

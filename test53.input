@@ -1,0 +1,29 @@
+-- tests compliment
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library FNGRPH
+)library SCENE
+GS := DirectedGraph(String)
+hs1 := cycleOpen(["a","b","c"],"a")$GS
+adjacencyMatrix(hs1)
+diagramSvg("testGraph5c1.svg",hs1,true)
+hs2 := cycleClosed(["1","2","3"],"b")$GS
+adjacencyMatrix(hs2)
+diagramSvg("testGraph5c2.svg",hs2,true)
+hs3 := closedTensor(hs1,hs2,concat)$GS
+adjacencyMatrix(hs3)
+diagramSvg("testGraph5c3.svg",hs3,true)
+hs4 := closedCartesian(hs1,hs2,concat)$GS
+adjacencyMatrix(hs4)
+diagramSvg("testGraph5c4.svg",hs4,false)
+hs5 := ~ closedTensor(~hs1,~hs2,concat)$GS
+adjacencyMatrix(hs5)
+diagramSvg("testGraph5c5.svg",hs5,false)
+hs6 := ~ closedCartesian(~hs1,~hs2,concat)$GS
+adjacencyMatrix(hs6)
+diagramSvg("testGraph5c6.svg",hs6,false)
+
+--hs7 := closedTensor(~hs1,~hs2,concat)$GS
+--hs8 := closedCartesian(~hs1,~hs2,concat)$GS

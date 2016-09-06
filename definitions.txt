@@ -1,0 +1,22 @@
+Definitions for undirected graph
+--------------------------------
+
+* vertex
+* edge
+* graph
+* path or route - a sequence of alternating vertex and edges, starting and ending with a vertex, where every edge connects the nodes it is between. In certain circumstances we will specify a path by its nodes only, or by its edges only, where this can be done unambiguously.
+* connected graph - A graph where there is a path from every vertex to every other vertex.
+* loop - a path from a vertex back to itself which does not use other nodes or edges more than once.
+* tree - A graph which is connected and has no loops (adding any edge to a tree will create a loop). Note: this is different from Tree domain in pan-Axiom because no vertex is designated as the root.
+* forest - A graph which has no loops (and in not necessarily connected)(a disjoint union of trees).
+* spanning tree of G - A subgraph of G which is a tree and contains all the vertices of G.
+* spanning forest of G - A subgraph of G which is a forest and contains all the vertices of G.
+
+Definitions for directed graph
+------------------------------
+
+* arrow - an edge with a specified direction
+* directed acyclic graph (DAG) - 
+* polytree or oriented tree is a directed graph with at most one undirected path between any two vertices. In other words, a polytree is a directed acyclic graph for which there are no undirected cycles either.
+* directed tree is a directed graph which would be a tree if the directions on the edges were ignored. Some authors restrict the phrase to the case where the edges are all directed towards a particular vertex, or all directed away from a particular vertex (see arborescence).
+* rooted tree if one vertex has been designated the root, in which case the edges have a natural orientation, towards or away from the root. The tree-order is the partial ordering on the vertices of a tree with u ≤ v if and only if the unique path from the root to v passes through u. A rooted tree which is a subgraph of some graph G is a normal tree if the ends of every edge in G are comparable in this tree-order whenever those ends are vertices of the tree (Diestel 2005, p. 15). Rooted trees, often with additional structure such as ordering of the neighbors at each vertex, are a key data structure in computer science; see tree data structure. In a context where trees are supposed to have a root, a tree without any designated root is called a free tree.

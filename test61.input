@@ -1,0 +1,5 @@
+l1 := loop([5::NNI,6::NNI,2::NNI,8::NNI])
+l2 := loop([2::NNI,8::NNI,5::NNI,6::NNI])
+l3 := loop([5::NNI,2::NNI,6::NNI,8::NNI])
+(l1 = l2)::Boolean
+(l1 = l3)::Boolean

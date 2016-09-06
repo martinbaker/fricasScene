@@ -1,0 +1,19 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library FNGRPH
+)library MFGRPH
+
+MF := MultifunctionGraph(String)
+MFOBJT ==> Record(value:String,posX:NNI,posY:NNI,next:List NNI)
+oba:MFOBJT := ["a",10,10,[1,2]]
+obb:MFOBJT := ["b",10,20,[2,1]]
+mf1 := multifunctionGraph([oba,obb])$MF
+ob1:MFOBJT := ["1",10,10,[1,2]]
+ob2:MFOBJT := ["2",20,10,[2,1]]
+mf2 := multifunctionGraph([ob1,ob2])$MF
+mf3 := closedTensor(mf1,mf2,concat)$MF
+diagramSvg("testGraph52s1.svg",mf3,true)
+mf4 := closedCartesian(mf1,mf2,concat)$MF
+diagramSvg("testGraph52s2.svg",mf4,true)

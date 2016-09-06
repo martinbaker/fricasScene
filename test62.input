@@ -1,0 +1,9 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library WGRPH
+GS := DirectedGraph(String)
+mat:List(List(NNI)) := [[0,1,1,0],[1,0,0,1],[1,0,0,1],[0,1,1,0]]
+hs1 := directedGraph(["a","b","c","d"],mat)$GS
+spanningTreeNode(hs1,1::NNI)$GS

@@ -1,0 +1,114 @@
+--Copyright (c) 2009 Johannes Grabmeier
+--All rights reserved.
+--
+--Redistribution and use in source and binary forms, with or without
+--modification, are permitted provided that the following conditions are
+--met:
+--
+--    - Redistributions of source code must retain the above copyright
+--      notice, this list of conditions and the following disclaimer.
+--
+--    - Redistributions in binary form must reproduce the above copyright
+--      notice, this list of conditions and the following disclaimer in
+--      the documentation and/or other materials provided with the
+--      distribution.
+--
+--THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+--IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+--TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+--PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+--OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+--EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+--PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+--PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+--LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+--NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+--SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+)abbrev category IML InternalMessageLevel
+++ Author: Johannes Grabmeier
+++ Date Created: 2009-03-05
+++ Date Last Updated: 2009-04-16(0.3)  2009-03-19 (0.2)
+++ Version: 0.3
+++ Basic Functions:
+++ Related Constructors: 
+++ Also See:
+++ AMS Classifications:
+++ Keywords:
+++ References:
+++ Description:
+++   For each domain which uses this category we define three
+++   internal message level pointers pF1, pF2, pF3, to boolean values, 
+++   default pointers are set to false. This gives three message levels 1,2,3, 
+++   default is 0. The value of the pointers are used as print flags.
+++   If a code has statements like "if deref pF1 then print ...."
+++   the users of the domain can dynamically change the message level
+++   to get interval informations. This can be done by \axiom{setMessageLevel}
+InternalMessageLevel(): Category == with
+    setMessageLevel:  NonNegativeInteger -> NonNegativeInteger 
+      ++ setMessageLevel(l) depending on l=0 (no), l=1 (minimal), l=2 (more), l=3 all
+      ++ internal messages and informations are given.
+    messageLevel?:  () -> NonNegativeInteger 
+      ++ messageLevel() returns 0, 1, 2 or 3 as message levels
+    messageLevelPointer: NonNegativeInteger ->  Boolean	
+      ++ messageLevelPointer(i) returns the value to which the i-th pointer points.
+    messageLevelPointers: () ->  List Boolean
+      ++ messageLevelPointers returns a list of all values to which 
+      ++ the pointers point.
+    line: String -> OutputForm
+      ++ line(c: String) constructs a line, i.e. 72 copies of String c.
+    dashLine: () -> OutputForm
+    -- no constants are possible, although it compiles without problems:
+    --equalLine(): OutputForm
+    --dottedLine(): OutputForm
+    equalLine: () -> OutputForm
+    dottedLine: () -> OutputForm
+  add
+    OF  ==> OutputForm
+    import OF
+    -- creations of three pointers for 3 levels
+    pF1: Reference Boolean := ref false
+    pF2: Reference Boolean := ref false
+    pF3: Reference Boolean := ref false
+
+    messageLevelPointer(i: NonNegativeInteger): Boolean == 
+	i = 0 => error("messageLevelPointer: no such pointer")
+	i = 1 => deref pF1
+	i = 2 => deref pF2
+	i = 3 => deref pF3
+	error("messageLevelPointer: no such pointer")
+
+    messageLevelPointers(): List Boolean == [deref pF1, deref pF2, deref pF3]
+
+    messageLevel?(): NonNegativeInteger ==
+	deref pF3 => 3
+	deref pF2 => 2
+	deref pF1 => 1
+	0
+
+    setMessageLevel(l : NonNegativeInteger): NonNegativeInteger ==
+	l = 1 => 
+		-- do not use pF1 := ref true, as ref creates a new pointer!
+		setref(pF1, true)
+		setref(pF2, false)
+		setref(pF3, false)
+		l
+	l = 2 => 
+		setref(pF1, true)
+		setref(pF2, true)
+		setref(pF3, false)
+		l
+	l >= 3 => 
+		setref(pF1, true)
+		setref(pF2, true)
+		setref(pF3, true)
+		l
+	setref(pF1, false)
+	setref(pF2, false)
+	setref(pF3, false)
+	l
+
+    line(c: String): OF == message concat new(72, c)
+    dashLine(): OF == line("-")
+    equalLine(): OF == line("=")
+    dottedLine(): OF == line(".")

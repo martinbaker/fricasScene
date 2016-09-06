@@ -1,0 +1,28 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+INNER := DirectedGraph(String)
+P := directedGraph(["a","b","c","d"])$INNER
+addArrow!(P,"alpha",1,2)
+addArrow!(P,"beta",1,3)
+addArrow!(P,"gamma",2,4)
+addArrow!(P,"delta",3,4)
+
+Q := directedGraph(["x","y"])$INNER
+addArrow!(Q,"alpha",1,2)
+
+R := directedGraph(["1","2"])$INNER
+addArrow!(R,"alpha",1,2)
+
+S := directedGraph(["t"])$INNER
+
+OUTER := DirectedGraph(INNER)
+ML := directedGraph([P,Q,R,S])$OUTER
+addArrow!(ML,"alpha",1,2)
+addArrow!(ML,"beta",1,3)
+addArrow!(ML,"gamma",2,4)
+addArrow!(ML,"delta",3,4)
+
+
+diagramSvg("testGraphml1.svg",ML,true)

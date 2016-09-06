@@ -1,0 +1,79 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+GS := DirectedGraph(String)
+
+hs1 := cycleOpen(["a","b","c"],"a")$GS
+hs2 := cycleClosed(["1","2","3"],"b")$GS
+hs3 := closedTensor(hs1,hs2,concat)$GS
+diagramSvg("testGraph3s1.svg",hs3,true)
+
+incidenceMatrix(hs3)
+adjacencyMatrix(hs3)
+laplacianMatrix(hs3)
+distanceMatrix(hs3)
+
+isAcyclic?(hs3)
+isFunctional?(hs3)
+
+isDirectSuccessor?(hs3,1::NNI,5::NNI)
+isDirectSuccessor?(hs3,5::NNI,1::NNI)
+isGreaterThan?(hs3,1::NNI,5::NNI)
+isFixPoint?(hs3,1::NNI)
+
+-- the name of arrow a->b
+-- if it does not exist then return "?"
+arrowName(hs3,1::NNI,5::NNI)
+
+-- the number of arrows leading in to node 'a' in graph 's'
+inDegree(hs3,1::NNI)
+
+-- the number of arrows leading out of node 'a' in graph 's'
+outDegree(hs3,1::NNI)
+
+-- index of all nodes with a direct arrow leading
+-- in to node 'a' in graph 's'
+nodeFromNode(hs3,1::NNI)
+
+-- index of all nodes with a direct arrow leading
+-- out of node 'a' in graph 's'
+nodeToNode(hs3,1::NNI)
+
+-- index of all arrows leading to a given node
+arrowsFromNode(hs3,1::NNI)
+
+-- index of all arrows leading from a given node
+arrowsToNode(hs3,1::NNI)
+
+-- index of all nodes with a direct arrow leading
+-- in to arrow 'a' in graph 's'
+nodeFromArrow(hs3,1::NNI)
+
+-- index of all nodes with a direct arrow leading
+-- out of arrow 'a' in graph 's'
+nodeToArrow(hs3,1::NNI)
+
+-- index of all arrows leading to a given arrow
+arrowsFromArrow(hs3,1::NNI)
+
+-- index of all arrows leading from a given arrow
+arrowsToArrow(hs3,1::NNI)
+
+max(hs1)
+
+max(hs2)
+
+min(hs1)
+
+min(hs2)
+
+max(hs1,[1::NNI,2::NNI])
+
+min(hs1,[2::NNI,3::NNI])
+
+MF1 := MultifunctionGraph(Integer)
+dg2 := dihedralGroup(3)
+CG := toCayleyGraph(dg2)$MF1
+toPermutation(CG)
+

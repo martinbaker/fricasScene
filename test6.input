@@ -1,0 +1,73 @@
+)library LOOP
+)library FGRPH
+)library FGRPH-
+)library DGRPH
+)library WGRPH
+GS := DirectedGraph(String)
+
+hs1 := cycleOpen(["a","b","c"],"a")$GS
+hs2 := cycleClosed(["1","2","3"],"b")$GS
+hs3 := closedCartesian(hs1,hs2,concat)$GS
+diagramSvg("testGraph6s1.svg",hs3,true)
+
+spanningTreeNode(hs3,1::NNI)$GS
+
+spanningForestNode(hs3)$GS
+
+spanningTreeArrow(hs3,1::NNI)$GS
+
+l1 := loop([5::NNI,6::NNI,2::NNI,8::NNI])
+l2 := loop([2::NNI,8::NNI,5::NNI,6::NNI])
+l3 := loop([5::NNI,2::NNI,6::NNI,8::NNI])
+(l1 = l2)::Boolean
+(l1 = l3)::Boolean
+
+loopsNodes(hs3)$GS
+loopsArrows(hs3)$GS
+
+routeNodes(hs3,1::NNI,2::NNI)$GS
+routeArrows(hs3,1::NNI,2::NNI)$GS
+
+WG := WeightedGraph(String,NNI)
+WOBJT ==> Record(value:String,posX:NNI,posY:NNI,weight:NNI)
+oba:WOBJT := ["a",10,30,1::NNI]
+obb:WOBJT := ["b",30,10,2::NNI]
+obc:WOBJT := ["c",30,30,3::NNI]
+obd:WOBJT := ["d",30,50,4::NNI]
+obe:WOBJT := ["e",50,30,5::NNI]
+hs4 := weightedGraph([oba,obb,obc,obd,obe])$WG
+addWArrow!(hs4,"a1",1,2,1)$WG
+addWArrow!(hs4,"a2",1,3,4)$WG
+addWArrow!(hs4,"a3",1,4,9)$WG
+addWArrow!(hs4,"b1",2,5,9)$WG
+addWArrow!(hs4,"b2",3,5,4)$WG
+addWArrow!(hs4,"b3",4,5,1)$WG
+diagramSvg("testGraph6s2.svg",hs4,true)
+weightedDistanceMatrix(hs4)
+
+routeNodes(hs4,1::NNI,5::NNI)$WG
+routeArrows(hs4,1::NNI,5::NNI)$WG
+
+OBJT ==> Record(value:String,posX:NNI,posY:NNI)
+oba2:OBJT := ["a",10,30]
+obb2:OBJT := ["b",30,10]
+obc2:OBJT := ["c",30,30]
+obd2:OBJT := ["d",30,50]
+obe2:OBJT := ["e",50,30]
+obf:OBJT := ["f",20,1]
+obg:OBJT := ["g",20,60]
+
+hs5 := directedGraph([oba2,obb2,obc2,obd2,obe2,obf,obg])$GS
+addArrow!(hs5,"a11",1,6)$GS
+addArrow!(hs5,"a11",6,2)$GS
+addArrow!(hs5,"a2",1,3)$GS
+addArrow!(hs5,"a3",1,4)$GS
+addArrow!(hs5,"b1",2,5)$GS
+addArrow!(hs5,"b2",3,5)$GS
+addArrow!(hs5,"b31",4,7)$GS
+addArrow!(hs5,"b32",7,5)$GS
+diagramSvg("testGraph6s3.svg",hs5,true)
+
+routeNodes(hs5,1::NNI,5::NNI)$GS
+routeArrows(hs5,1::NNI,5::NNI)$GS
+
