@@ -1393,6 +1393,11 @@ FiniteGraph(S) : Category == Definition where
     ++ fileName: String is the name of the SVG file that will be created
     ++ n: % is the graph that will be written
     ++ dispArrowName: Boolean is true to include the name of each arrow
+   diagramsSvg : (fileName : String, ln : List %, dispArrowName : Boolean) -> Void
+    ++ creates SVG diagram containing multiple graphs
+    ++ fileName: String is the name of the SVG file that will be created
+    ++ ln: List % is list of graphs that will be written
+    ++ dispArrowName: Boolean is true to include the name of each arrow
    deepDiagramSvg : (fileName : String, n : %, dispArrowName : Boolean) -> Void
    diagramWidth : (s : %) -> NNI
     ++ diagramWidth(s) returns the width of the diagram that will be
@@ -2069,6 +2074,19 @@ FiniteGraph(S) : Category == Definition where
                            diagramHeight(n)+10::NNI)$PT)$SBoundary(PT)
     sc := createSceneRoot(view)$Scene(PT)
     subdiagramSvg(sc, n, dispArrowName, false)
+    writeSvg(sc, fileName)
+
+   -- creates SVG diagram containing multiple graphs
+   -- fileName: String is the name of the SVG file that will be created
+   -- ln: List % is list of graphs that will be written
+   -- dispArrowName: Boolean is true to include the name of each arrow
+   diagramsSvg(fileName : String, ln : List %, dispArrowName : Boolean) : Void ==
+    dW : NNI := 0
+    for n in ln repeat dW := (dW + diagramWidth(n) + 10)::NNI
+    view := boxBoundary(sipnt(0, 0)$PT, sipnt(dW, _
+                           diagramHeight(first ln)+10::NNI)$PT )$SBoundary(PT)
+    sc := createSceneRoot(view)$Scene(PT)
+    for n in ln repeat subdiagramSvg(sc, n, dispArrowName, false)
     writeSvg(sc, fileName)
 
    deepDiagramSvg(fileName : String, n : %, dispArrowName : Boolean) : Void ==
@@ -3993,7 +4011,7 @@ UndirectedGraph(S) : Exports == Implementation where
   -- dispArrowName: Boolean is true to include the name of each arrow
   -- replaces subdiagramSvg in FiniteGraph to give a line without
   -- arrows for undirected graphs.
-  subdiagramSvgLine(sc : Scene(PT), n : %, dispArrowName : Boolean, deep : Boolean) : Void ==
+  subdiagramSvg(sc : Scene(PT), n : %, dispArrowName : Boolean, deep : Boolean) : Void ==
     print hconcat(["subdiagramSvgLine called from UndirectedGraph"::OutputForm])$OutputForm
     -- all arrows in undirected graphs will be black
     mt := addSceneMaterial(sc,3::DF,"black","black")$Scene(PT)
@@ -4041,15 +4059,14 @@ UndirectedGraph(S) : Exports == Implementation where
     for arrow in arrs for arrn in 1..#arrs repeat
       fromX : NNI := indexPointx.(arrow.fromOb)
       toX : NNI := indexPointx.(arrow.toOb)
-
-      fromX := (fromX+arrow.xOffset)::NNI
-      toX := (toX+arrow.xOffset)::NNI
-
       fromY : NNI := indexPointy.(arrow.fromOb)
       toY : NNI := indexPointy.(arrow.toOb)
 
-      fromY := (fromY+arrow.yOffset)::NNI
-      toY := (toY+arrow.yOffset)::NNI
+      --fromX := (fromX+arrow.xOffset)::NNI
+      --toX := (toX+arrow.xOffset)::NNI
+      --fromY := (fromY+arrow.yOffset)::NNI
+      --toY := (toY+arrow.yOffset)::NNI
+
       -- for arrow name we want to position text at the mid point of the
       -- arrow, this is given by (start + end)/2. We divide integer by 2
       -- by shifting binary number one place to the left.
@@ -4060,46 +4077,32 @@ UndirectedGraph(S) : Exports == Implementation where
       arrNumber : Integer := position(arrn, arrIndex)
       rema : Integer := divide(arrNumber, 8).remainder
       -- if this is a second order graph then we draw inner arrows
-      if not deep then
-        fnode : Scene(PT) := indexBounds.(arrow.fromOb)
-        tnode : Scene(PT) := indexBounds.(arrow.toOb)
-        offset : PT := sipnt(arrow.xOffset, arrow.yOffset)$PT
-        -- next we add the arrows, the parameter "proportional"::Symbol
-        -- tells the scenegraph code to reduce the length of the arrow
-        -- slightly to avoid overlapping the vertex label, this is only
-        -- required if not second order graph.
-        arrNode := addSceneLine(mt, fnode, tnode, (diagramWidth(n)+10)::DF)
-        --print(vconcat([_
-        -- hconcat("fgraph subdiagramSvg sc="::OutputForm,sc::OutputForm)$OutputForm,_
-        -- hconcat(" n="::OutputForm,n::OutputForm)$OutputForm,_
-        -- hconcat(" arrNode="::OutputForm,arrNode::OutputForm)$OutputForm])$OutputForm)
-        -- add the name of the arrow
-        if dispArrowName then
-          s : String := arrow.name
-          addSceneText(mt, s, 32::NNI, sipnt(midX, midY)$PT)$Scene(PT)
+      fnode : Scene(PT) := indexBounds.(arrow.fromOb)
+      tnode : Scene(PT) := indexBounds.(arrow.toOb)
+      offset : PT := sipnt(arrow.xOffset, arrow.yOffset)$PT
+      -- next we add the lines.
+      arrNode := addSceneLine(mt, fnode, tnode, (diagramWidth(n)+10)::DF)
+      --print(vconcat([_
+      -- hconcat("fgraph subdiagramSvg sc="::OutputForm,sc::OutputForm)$OutputForm,_
+      -- hconcat(" n="::OutputForm,n::OutputForm)$OutputForm,_
+      -- hconcat(" arrNode="::OutputForm,arrNode::OutputForm)$OutputForm])$OutputForm)
+      -- add the name of the arrow
+      if dispArrowName then
+        s : String := arrow.name
+        addSceneText(mt, s, 32::NNI, sipnt(midX, midY)$PT)$Scene(PT)
     return void
 
    -- creates an SVG diagram
    -- fileName: String is the name of the SVG file that will be created
    -- n: % is the graph that will be written
    -- dispArrowName: Boolean is true to include the name of each arrow
-  diagramSvgLine(fileName : String, n : %, dispArrowName : Boolean) : Void ==
+  diagramSvg(fileName : String, n : %, dispArrowName : Boolean) : Void ==
     print hconcat(["diagramSvgLine called from UndirectedGraph"::OutputForm])$OutputForm
     view := boxBoundary(sipnt(0, 0)$PT, sipnt(diagramWidth(n)+10::NNI, _
                            diagramHeight(n)+10::NNI)$PT)$SBoundary(PT)
     sc := createSceneRoot(view)$Scene(PT)
-    subdiagramSvgLine(sc, n, dispArrowName, false)
+    subdiagramSvg(sc, n, dispArrowName, false)
     writeSvgQuantised(sc, fileName)
-
-  diagramsSvgLine(fileName : String, ln : List %, dispArrowName : Boolean) : Void ==
-    print hconcat(["diagramsSvgLine called from UndirectedGraph"::OutputForm])$OutputForm
-    dW : NNI := 0
-    for n in ln repeat dW := (dW + diagramWidth(n) + 10)::NNI
-    view := boxBoundary(sipnt(0, 0)$PT, sipnt(dW, _
-                           diagramHeight(first ln)+10::NNI)$PT )$SBoundary(PT)
-    sc := createSceneRoot(view)$Scene(PT)
-    for n in ln repeat subdiagramSvgLine(sc, n, dispArrowName, false)
-    writeSvg(sc, fileName)
   --- JG: end new code
 
 )if false
