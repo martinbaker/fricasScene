@@ -14,7 +14,7 @@ Alternative geometry and graphics framework using scenegraph structure.
 \section{Preface}
 Its easier to explain a graphics framework with diagrams and
 screenshots so you may prefer to read the documentation here:
-\url{http : //www.euclideanspace.com/maths/standards/program/mycode/graph/}
+\url{http://www.euclideanspace.com/maths/standards/program/mycode/graph/}
 
 This is a graphics framework to support many types of drawing,
 plotting, diagrams and various types of output that can't be
@@ -401,7 +401,7 @@ addSceneNamedPoints : (n : %, np : SceneNamedPoints PT) -> %
 \end{verbatim}
 A tutorial showing examples of how to use the named point node
 is here.
-\url{http : //www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/named/index.htm}
+\url{http://www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/named/index.htm}
 \subsection{Shape Node}
 A shape is something like a rectangle or an ellipse in 2 dimensions
 or a sphere or box in 3 dimensions.
@@ -447,7 +447,7 @@ createSceneShape : (shape : SHAPE) -> %
 \end{verbatim}
 
 A tutorial showing examples of how to use the shape node is here.
-\url{http : //www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/shapes/index.htm}
+\url{http://www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/shapes/index.htm}
 \subsection{Def Node}
 The 'def' and 'use' constructs are used together to allow us to include
 a branch of the scenegraph multiple times in the scene.
@@ -460,7 +460,7 @@ addSceneDef : (n : %, nam : String, nde : %) -> %
     ++ combines createSceneDef with addChild!
 \end{verbatim}
 A tutorial showing examples of how to use the def and use nodes is here.
-\url{http : //www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/defuse/index.htm}
+\url{http://www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/defuse/index.htm}
 
 \subsection{Use Node}
 The 'def' and 'use' constructs are used together to allow us to include
@@ -473,7 +473,7 @@ addSceneUse : (n : %, nam : String) -> %
     ++ combines createSceneUse with addChild!
 \end{verbatim}
 A tutorial showing examples of how to use the def and use nodes is here.
-\url{http : //www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/defuse/index.htm}
+\url{http://www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/defuse/index.htm}
 
 \section{Drawing Plots and grids}
 The following constructors create 'compound' nodes in that the node
@@ -784,8 +784,8 @@ where a variable (in this case def : Matrix) is a constant in the function?
 \item Support interaction with the graphics, possibly by using a OpenGL
   canvas which could be called directly from SPAD
   Bill Page mentioned that there is an OpenGL binding for lisp.
-  \url{http : //common-lisp.net/project/cl-opengl/}
-  \url{http : //repo.or.cz/w/cl-glfw.git}
+  \url{http://common-lisp.net/project/cl-opengl/}
+  \url{http://repo.or.cz/w/cl-glfw.git}
 \end{itemize}
 \section{SPointCategory}
 SPointCategory defines a type that can represent either a point or a vector.
@@ -835,7 +835,7 @@ this but decided not to because:
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description: PointCategory is the category of points and vectors in space.
 ++ Points may be used to represent shapes in a scenegraph such as: the
 ++ vertices of a cube or points along a line.
@@ -1028,7 +1028,7 @@ distinguish between points and vectors.
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description: an implementation of PointCategory to represent points and
 ++ vectors in three dimensional coordinate space
 
@@ -1323,7 +1323,7 @@ dimensional points and vectors on Argand plane.
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description: an implementation of PointCategory to represent points and
 ++ vectors in an Argand plane
 
@@ -1539,7 +1539,7 @@ A coding of points and vectors in conformal space.
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description: an implementation of PointCategory to represent points and
 ++ vectors in n+2 dimensional conformal space based on n dimensional
 ++ Euclidean space.
@@ -2204,7 +2204,7 @@ We can then use this 'named points' domain in the scene like this:
                                                                    Type : Void
 \end{verbatim}
 Further information here:
-\url{http : //www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/named/index.htm}
+\url{http://www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/named/index.htm}
 \section{domain SceneNamedPoints}
 )endif
 
@@ -2954,7 +2954,7 @@ such as reflection in unit circle:
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description:
 ++ This domain implements transforms from SPoint to SPoint
 
@@ -3343,7 +3343,7 @@ inside the boundary.
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description:
 ++ This domain implements boundaries for use in scene graph
 
@@ -3734,7 +3734,7 @@ function we can support two formats without too much duplication.
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description:
 ++ This package provides support for XML files
 ++ XML attributes are inside the opening tag:
@@ -3802,7 +3802,7 @@ XmlAttribute() : Exports==Implementation where
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description:
 ++ This package provides support for XML files
 ++ an XML element is something which either has the form:
@@ -3918,7 +3918,7 @@ XmlElement() : Exports==Implementation where
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 ++ Description:
 ++ This package provides support for XML files
 
@@ -4016,11 +4016,12 @@ object.
 ++ AMS Classifications:
 ++ Keywords:
 ++ References:
-++ http: //www.euclideanspace.com/maths/standards/program/mycode/graph/
+++ http://www.euclideanspace.com/maths/standards/program/mycode/graph/
 
 Scene(PT) : Exports == Implementation where
  PT : SPointCategory
 
+ x<<y ==> hconcat(x::OutputForm,y::OutputForm)
  TR ==> STransform PT
  I ==> Integer
  C ==> Complex DoubleFloat
@@ -5713,12 +5714,13 @@ Scene(PT) : Exports == Implementation where
         -- use named points
         for nam in n.parameters.text.np repeat
           param2 := xform(tran, findPoint(np2, nam)+n.parameters.text.pos)$TR
-          nodeAttsTxt := [xmlAttribute("font-size",_
-            string(n.parameters.text.siz)), _
+          nodeAttsTxt := [xmlAttribute("font-size",string(n.parameters.text.siz)), _
+            xmlAttribute("transform",_
+            concat(["scale(",math_to_string(scale2/(2::DF))@String,",",math_to_string(scale2/(2::DF))@String,")"])@String), _
             xmlAttribute("x",_
-            (math_to_string (screenCoordX(param2)*scale2))@String), _
+            (math_to_string (screenCoordX(param2)*(2::DF)))@String), _
             xmlAttribute("y",_
-            (math_to_string (-screenCoordY(param2)*scale2))@String), _
+            (math_to_string (-screenCoordY(param2)*(2::DF)))@String), _
             xmlAttribute("style",concat("fill:",mat2.fillCol))_
               ]
           xch : XmlElement := xmlElement(nodeName, nam, nodeAttsTxt)
@@ -5726,11 +5728,15 @@ Scene(PT) : Exports == Implementation where
             nodeEles := concat(nodeEles, xch)
         return xmlElement("g",nodeEles,nodeAtts)
       param2 : PT := xform(tran, n.parameters.text.pos)$TR
+--      print("scene toSvg font-size="::Symbol << n.parameters.text.siz << " scale2="::Symbol << _
+--        math_to_string(scale2)@String)
       nodeAtts := [xmlAttribute("font-size",string(n.parameters.text.siz)),_
+        xmlAttribute("transform",_
+        concat(["scale(",math_to_string(scale2/(2::DF))@String,",",math_to_string(scale2/(2::DF))@String,")"])@String), _
         xmlAttribute("x",_
-        (math_to_string (screenCoordX(param2)*scale2))@String), _
+        (math_to_string (screenCoordX(param2)*(2::DF))@String)), _
         xmlAttribute("y",_
-        (math_to_string (-screenCoordY(param2)*scale2))@String), _
+        (math_to_string (-screenCoordY(param2)*(2::DF))@String)), _
         xmlAttribute("style",concat("fill:",mat2.fillCol))_
           ]
       return xmlElement(nodeName, n.parameters.text.txt, nodeAtts)
@@ -6730,17 +6736,17 @@ algebra to represent graphical information.
 [2] Doran & Lasenby, 2003 , Geometric Algebra for Physicists,
 ISBN 0521480221
 [3] User Tutorial:
-http : //www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/
+http://www.euclideanspace.com/maths/standards/program/mycode/graph/tutorial/
 [4] User Reference:
-http : //www.euclideanspace.com/maths/standards/program/mycode/graph/userref/
+http://www.euclideanspace.com/maths/standards/program/mycode/graph/userref/
 [5] Programmers Reference:
-http : //www.euclideanspace.com/maths/standards/program/mycode/graph/progref/
+http://www.euclideanspace.com/maths/standards/program/mycode/graph/progref/
 [6] Examples of scenegraph structure:
-http : //www.euclideanspace.com/maths/standards/program/mycode/graph/examples/
+http://www.euclideanspace.com/maths/standards/program/mycode/graph/examples/
 [7] X3D & Related Specifications
-http : //www.web3d.org/x3d/
+http://www.web3d.org/x3d/
 [8] SVG & Related Specifications
-http : //www.w3.org/Graphics/SVG/
+http://www.w3.org/Graphics/SVG/
 \end{thebibliography}
 \end{document}
 )endif
