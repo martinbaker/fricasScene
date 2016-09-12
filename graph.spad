@@ -5114,7 +5114,7 @@ WeightedGraph(S, W) : Exports == Implementation where
     error "this form of addObject! not supported in multifunctionGraph"
     [[], []]
 
-  -- Here only to implement FiniteGraph, not wery useful as it has zero weight
+  -- Here only to implement FiniteGraph, not very useful as it has zero weight
   addArrow!(s : %, ar: ARROW) : % ==
     addWArrow!(s,ar.name, ar.fromOb, ar.toOb, 0$W)
 
