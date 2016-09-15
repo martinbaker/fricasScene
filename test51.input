@@ -1,10 +1,3 @@
-)library LOOP
-)library FGRPH
-)library FGRPH-
-)library DGRPH
-)library FNGRPH
-)library MFGRPH
-
 DG := DirectedGraph(String)
 hs1 := cycleClosed(["a","b","c"],"a")$DG
 hs2 := cycleClosed(["1","2","3"],"b")$DG

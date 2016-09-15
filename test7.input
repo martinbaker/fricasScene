@@ -1,11 +1,3 @@
-)library LOOP
-)library FGRPH
-)library FGRPH-
-)library DGRPH
-)library FNGRPH
-)library UDGRPH
-)library MFGRPH
-)library WGRPH
 FG := FunctionGraph(String)
 
 OBJT ==> Record(value:String,posX:NNI,posY:NNI)

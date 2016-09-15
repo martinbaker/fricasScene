@@ -1,10 +1,4 @@
 -- tests constructing multifunction graph using permutation
-)library LOOP
-)library FGRPH
-)library FGRPH-
-)library DGRPH
-)library FNGRPH
-)library MFGRPH
 MF := MultifunctionGraph(String)
 cy1 := cycles([["a","b"],["c","d"]])
 cy2 := cycles([["a","c"],["b","d"]])

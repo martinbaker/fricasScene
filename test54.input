@@ -1,10 +1,4 @@
 -- tests compliment in multifunction graph
-)library LOOP
-)library FGRPH
-)library FGRPH-
-)library DGRPH
-)library MFGRPH
-)library SCENE
 MF := MultifunctionGraph(String)
 mf1 := cycleOpen(["a","b","c"],"a")$MF
 adjacencyMatrix(mf1)

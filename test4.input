@@ -1,24 +1,18 @@
-)library LOOP
-)library FGRPH
-)library FGRPH-
-)library DGRPH
-)library SCENE
-)library MATRIX
 GS := DirectedGraph(String)
 -- now create graph suitable for diagram
 OBJT ==> Record(value:String,posX:NNI,posY:NNI)
 ARRW ==> Record(name:String,arrType:NNI,fromOb:NNI,_
-           toOb:NNI,xOffset:Integer,yOffset:Integer)
+           toOb:NNI,xOffset:Integer,yOffset:Integer,map:List(NNI))
 
 oba:OBJT := ["a",2,2]
 obb:OBJT := ["b",2,4]
-ara:ARRW := ["alpha",0,1,2,0,0]
+ara:ARRW := ["alpha",0,1,2,0,0,[]]
 hs1 := directedGraph([oba,obb],[ara])$GS
 diagramSvg("testGraph4s1.svg",hs1,true)
 
 ob1:OBJT := ["1",2,2]
 ob2:OBJT := ["2",4,2]
-ar1:ARRW := ["beta",0,1,2,0,0]
+ar1:ARRW := ["beta",0,1,2,0,0,[]]
 hs2 := directedGraph([ob1,ob2],[ar1])$GS
 diagramSvg("testGraph4s2.svg",hs2,true)
 
@@ -39,11 +33,11 @@ obd:OBJT := ["b",2,4]
 obe:OBJT := ["c",4,6]
 obf:OBJT := ["d",3,8]
 obg:OBJT := ["e",3,10]
-arb:ARRW := ["alp1",0,1,2,0,0]
-arc:ARRW := ["alp2",0,2,4,0,0]
-ard:ARRW := ["alp3",0,1,3,0,0]
-are:ARRW := ["alp4",0,3,4,0,0]
-arf:ARRW := ["alp5",0,4,5,0,0]
+arb:ARRW := ["alp1",0,1,2,0,0,[]]
+arc:ARRW := ["alp2",0,2,4,0,0,[]]
+ard:ARRW := ["alp3",0,1,3,0,0,[]]
+are:ARRW := ["alp4",0,3,4,0,0,[]]
+arf:ARRW := ["alp5",0,4,5,0,0,[]]
 hs11 := directedGraph([obc,obd,obe,obf,obg],[arb,arc,ard,are,arf])$GS
 diagramSvg("testGraph4s7.svg",hs11,true)
 
@@ -52,9 +46,9 @@ ob3:OBJT := ["1",2,3]
 ob4:OBJT := ["2",4,3]
 ob5:OBJT := ["3",6,4]
 ob6:OBJT := ["4",8,2]
-ar2:ARRW := ["bet1",0,1,2,0,0]
-ar3:ARRW := ["bet2",0,2,4,0,0]
-ar4:ARRW := ["bet3",0,2,3,0,0]
+ar2:ARRW := ["bet1",0,1,2,0,0,[]]
+ar3:ARRW := ["bet2",0,2,4,0,0,[]]
+ar4:ARRW := ["bet3",0,2,3,0,0,[]]
 hs12 := directedGraph([ob3,ob4,ob5,ob6],[ar2,ar3,ar4])$GS
 diagramSvg("testGraph4s8.svg",hs12,true)
 

@@ -1,10 +1,4 @@
 -- tests compliment
-)library LOOP
-)library FGRPH
-)library FGRPH-
-)library DGRPH
-)library FNGRPH
-)library SCENE
 GS := DirectedGraph(String)
 hs1 := cycleOpen(["a","b","c"],"a")$GS
 adjacencyMatrix(hs1)
